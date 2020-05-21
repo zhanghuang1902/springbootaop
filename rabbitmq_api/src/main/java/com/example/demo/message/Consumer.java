@@ -20,7 +20,7 @@ public class Consumer {
         //创建连接工厂
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("127.0.0.1");
-        factory.setPort(5672);
+        factory.setPort(5672);//端口号
         factory.setVirtualHost("/");
         factory.setUsername("guest");
         factory.setPassword("guest");
