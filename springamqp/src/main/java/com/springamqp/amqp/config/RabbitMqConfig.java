@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author:zh
  */
 @Configuration
-@ComponentScan("com.springamqp.amqp.config.*")
+@ComponentScan({"com.springamqp.amqp.*"})
 public class RabbitMqConfig {
 
     @Bean
