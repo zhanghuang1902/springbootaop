@@ -2,8 +2,10 @@ package com.springamqp.amqp;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -51,8 +53,41 @@ public class AmqpApplicationTests {
                         .to(new FanoutExchange("test.topic", false, false)));//直接创建交换机 建立关联关系
 
         //清空队列数据
-        rabbitAdmin.purgeQueue("test.topic.queue", false);
+        rabbitAdmin.purgeQueue("queue001", false);
 
+    }
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Test
+    public void testSendMessage(){
+        //1.创建消息
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.getHeaders().put("desc","信息描述");
+        messageProperties.getHeaders().put("type","自定义消息类型");
+        Message message = new Message("hello mq".getBytes(), messageProperties);
+        rabbitTemplate.convertAndSend("topic001", "spring.amqp", message, new MessagePostProcessor() {
+            @Override
+            public Message postProcessMessage(Message message) throws AmqpException {
+                System.out.println("添加额为的设置。。。");
+                message.getMessageProperties().getHeaders().put("desc","额外修改消息描述");
+                message.getMessageProperties().getHeaders().put("attr","额为新加的属性");
+                return message;
+            }
+        });
+    }
+
+
+    @Test
+    public void testSendMessage2(){
+        //1.创建消息
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setContentType("test/plain");
+        Message message = new Message("hello mq 消息".getBytes(), messageProperties);
+        rabbitTemplate.send("topic001","spring.abc",message);
+        rabbitTemplate.convertAndSend("topic001","spring.amqp","hello object");
+        rabbitTemplate.convertAndSend("topic002","rabbit.amqp","hello object");
     }
 
 }
