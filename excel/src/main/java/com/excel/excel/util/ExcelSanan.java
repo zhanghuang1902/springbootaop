@@ -4,18 +4,17 @@ import cn.hutool.core.lang.Console;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.sax.handler.RowHandler;
-import com.excel.excel.Person;
 
 import java.util.List;
 
-/**
- * @author 97083
- */
-class ExcelReaderClass {
+public class ExcelSanan {
 
     public static void main(String[] args) throws Exception {
         ExcelReader reader = ExcelUtil.getReader("D:\\Test/测试.xlsx",0);
         List<Person> all =  reader.readAll(Person.class);
+        for (Person person : all) {
+            System.out.println(person.toString());
+        }
 
 
 
@@ -29,8 +28,4 @@ class ExcelReaderClass {
             }
         };
     }
-
-
 }
-
-

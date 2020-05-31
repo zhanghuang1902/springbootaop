@@ -1,4 +1,4 @@
-package com.excel.excel;
+package com.excel.excel.util;
 
 /**
  * @author 97083
@@ -33,5 +33,14 @@ public class Person {
 
     public void setWork(String work) {
         this.work = work;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age='" + age + '\'' +
+                ", work='" + work + '\'' +
+                '}';
     }
 }
