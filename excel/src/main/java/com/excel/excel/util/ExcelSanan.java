@@ -1,15 +1,12 @@
 package com.excel.excel.util;
 
 import cn.hutool.core.lang.Console;
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import cn.hutool.poi.excel.sax.handler.RowHandler;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 

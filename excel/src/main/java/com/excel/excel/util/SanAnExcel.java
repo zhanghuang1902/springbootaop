@@ -18,21 +18,31 @@ public class SanAnExcel {
 
     private String 快测尺寸;
 
-    private String IV;
+    private Double IV;
 
-    private String SmpWld1Avg;
+    private Double SmpWld1Avg;
 
-    private String SmpLop1Avg;
+    private Double SmpLop1Avg;
 
-    private String SmpVf1Avg;
+    private Double SmpVf1Avg;
 
-    private String Esd2000pct;
+    private Double Esd2000pct;
 
-    private String Esd4000pct;
+    private Double Esd4000pct;
 
-    private String WdStd;
+    private Double WdStd;
 
-    private String VF4avg;
+    private Double VF4avg;
+
+    private String 可投产品;
+
+    public String get可投产品() {
+        return 可投产品;
+    }
+
+    public void set可投产品(String 可投产品) {
+        this.可投产品 = 可投产品;
+    }
 
     public String get磊晶号() {
         return 磊晶号;
@@ -66,67 +76,67 @@ public class SanAnExcel {
         this.快测尺寸 = 快测尺寸;
     }
 
-    public String getIV() {
+    public Double getIV() {
         return IV;
     }
 
-    public void setIV(String IV) {
+    public void setIV(Double IV) {
         this.IV = IV;
     }
 
-    public String getSmpWld1Avg() {
+    public Double getSmpWld1Avg() {
         return SmpWld1Avg;
     }
 
-    public void setSmpWld1Avg(String smpWld1Avg) {
+    public void setSmpWld1Avg(Double smpWld1Avg) {
         SmpWld1Avg = smpWld1Avg;
     }
 
-    public String getSmpLop1Avg() {
+    public Double getSmpLop1Avg() {
         return SmpLop1Avg;
     }
 
-    public void setSmpLop1Avg(String smpLop1Avg) {
+    public void setSmpLop1Avg(Double smpLop1Avg) {
         SmpLop1Avg = smpLop1Avg;
     }
 
-    public String getSmpVf1Avg() {
+    public Double getSmpVf1Avg() {
         return SmpVf1Avg;
     }
 
-    public void setSmpVf1Avg(String smpVf1Avg) {
+    public void setSmpVf1Avg(Double smpVf1Avg) {
         SmpVf1Avg = smpVf1Avg;
     }
 
-    public String getEsd2000pct() {
+    public Double getEsd2000pct() {
         return Esd2000pct;
     }
 
-    public void setEsd2000pct(String esd2000pct) {
+    public void setEsd2000pct(Double esd2000pct) {
         Esd2000pct = esd2000pct;
     }
 
-    public String getEsd4000pct() {
+    public Double getEsd4000pct() {
         return Esd4000pct;
     }
 
-    public void setEsd4000pct(String esd4000pct) {
+    public void setEsd4000pct(Double esd4000pct) {
         Esd4000pct = esd4000pct;
     }
 
-    public String getWdStd() {
+    public Double getWdStd() {
         return WdStd;
     }
 
-    public void setWdStd(String wdStd) {
+    public void setWdStd(Double wdStd) {
         WdStd = wdStd;
     }
 
-    public String getVF4avg() {
+    public Double getVF4avg() {
         return VF4avg;
     }
 
-    public void setVF4avg(String VF4avg) {
+    public void setVF4avg(Double VF4avg) {
         this.VF4avg = VF4avg;
     }
 }
