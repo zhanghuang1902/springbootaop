@@ -39,11 +39,11 @@ public static List<Object> aa = new ArrayList<>();
                 if(sanAnExcel.get可投产品()!=null && sanAnExcel.get可投产品().equals(sanAnCode.get投片型号())){
                     if(NumberUtil.compare(sanAnCode.get波长min(),sanAnExcel.getSmpWld1Avg())==-1 &&NumberUtil.compare(sanAnCode.get波长max(),sanAnExcel.getSmpWld1Avg())==1
                             && sanAnExcel.getSmpLop1Avg()!=null && NumberUtil.compare(sanAnCode.get亮度min(),sanAnExcel.getSmpLop1Avg())==-1 &&NumberUtil.compare(sanAnCode.get亮度max(),sanAnExcel.getSmpLop1Avg())==1
-                            && sanAnExcel.getSmpVf1Avg()!=null &&NumberUtil.compare(sanAnCode.get电压min(),sanAnExcel.getSmpVf1Avg())==-1 &&NumberUtil.compare(sanAnCode.get电压max(),sanAnExcel.getSmpVf1Avg())==1
-                            && sanAnExcel.getVF4avg()!=null &&NumberUtil.compare(sanAnCode.getVF4min(),sanAnExcel.getVF4avg())==-1 &&NumberUtil.compare(sanAnCode.getVF4max(),sanAnExcel.getVF4avg())==1
-                            && sanAnExcel.getWdStd()!=null &&NumberUtil.compare(sanAnCode.getWDSTDmin(),sanAnExcel.getWdStd())==-1 &&NumberUtil.compare(sanAnCode.getWDSTDmax(),sanAnExcel.getWdStd())==1
-                            && sanAnExcel.getEsd2000pct()!=null &&NumberUtil.compare(sanAnCode.getESD2000min(),sanAnExcel.getEsd2000pct())==-1 &&NumberUtil.compare(sanAnCode.getESD2000max(),sanAnExcel.getEsd2000pct())==1
-                            && sanAnExcel.getEsd4000pct()!=null &&NumberUtil.compare(sanAnCode.getESD4000min(),sanAnExcel.getEsd4000pct())==-1 &&NumberUtil.compare(sanAnCode.getESD4000max(),sanAnExcel.getEsd4000pct())==1
+                            && sanAnExcel.getSmpVf1Avg()!=null && NumberUtil.compare(sanAnCode.get电压min(),sanAnExcel.getSmpVf1Avg())==-1 &&NumberUtil.compare(sanAnCode.get电压max(),sanAnExcel.getSmpVf1Avg())==1
+                            && sanAnExcel.getVF4avg()!=null && NumberUtil.compare(sanAnCode.getVF4min(),sanAnExcel.getVF4avg())==-1 &&NumberUtil.compare(sanAnCode.getVF4max(),sanAnExcel.getVF4avg())==1
+                            && sanAnExcel.getWdStd()!=null && NumberUtil.compare(sanAnCode.getWDSTDmin(),sanAnExcel.getWdStd())==-1 &&NumberUtil.compare(sanAnCode.getWDSTDmax(),sanAnExcel.getWdStd())==1
+                            && sanAnExcel.getEsd2000pct()!=null && NumberUtil.compare(sanAnCode.getESD2000min(),sanAnExcel.getEsd2000pct())==-1 &&NumberUtil.compare(sanAnCode.getESD2000max(),sanAnExcel.getEsd2000pct())==1
+                            && sanAnExcel.getEsd4000pct()!=null && NumberUtil.compare(sanAnCode.getESD4000min(),sanAnExcel.getEsd4000pct())==-1 &&NumberUtil.compare(sanAnCode.getESD4000max(),sanAnExcel.getEsd4000pct())==1
                             && sanAnExcel.get最终等级()!=null &&sanAnCode.get最终等级().equals(sanAnExcel.get最终等级())
                             && sanAnExcel.get表面等级()!=null &&sanAnCode.get表面等级().indexOf(sanAnExcel.get表面等级())!=-1)
                     {
