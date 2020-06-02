@@ -184,4 +184,6 @@ public class SanAnCode {
     public void set表面等级(String 表面等级) {
         this.表面等级 = 表面等级;
     }
+
+
 }
