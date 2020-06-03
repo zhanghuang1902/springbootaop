@@ -7,6 +7,9 @@ import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import cn.hutool.poi.excel.sax.handler.RowHandler;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -25,11 +28,12 @@ public class ExcelSananTest {
 public static List<Object> aa = new ArrayList<>();
 
     public static void main(String[] args) {
-        ExcelReader reader = ExcelUtil.getReader("D:/Test/挑片率统计.xlsx",0);
+        long l = System.currentTimeMillis();
+        ExcelReader reader = ExcelUtil.getReader("D:/Test/挑片率统计1.xlsx",0);
         //将list转换成含有13个字段的集合
         List<SanAnExcel> all =  reader.readAll(SanAnExcel.class);
         //读取sheet2参数
-        ExcelReader readerCode = ExcelUtil.getReader("D:/Test/挑片率统计.xlsx",1);
+        ExcelReader readerCode = ExcelUtil.getReader("D:/Test/挑片率统计1.xlsx",1);
         List<SanAnCode> code = readerCode.readAll(SanAnCode.class);
         //找出符合条件的信息转换成list
         ArrayList<SanAnExcel> objects = new ArrayList<>();
@@ -79,6 +83,9 @@ public static List<Object> aa = new ArrayList<>();
         }
         //导出符合挑片信息的结果
         write(objects,result);
+        reader.close();
+        readerCode.close();
+        System.out.println(System.currentTimeMillis() - l);
     }
 
     private static RowHandler createRowHandler(List<Object> list) {
