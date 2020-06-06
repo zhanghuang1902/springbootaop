@@ -8,7 +8,7 @@ package com.excel.excel.util;
  * @date:2020/6/1 15:24
  * @author:zh
  */
-public class SanAnExcel {
+public class SanAnExcel extends Object {
 
     private String 磊晶号;
 
