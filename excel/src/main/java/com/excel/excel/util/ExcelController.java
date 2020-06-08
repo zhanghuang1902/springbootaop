@@ -4,14 +4,14 @@ import cn.hutool.core.util.NumberUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -30,16 +30,15 @@ import java.util.stream.Collectors;
 public class ExcelController {
 
 
-    @GetMapping("/readAndWrite/{name}")
-    public String readAndWrite(@PathVariable("name") String name){
-
-        if(StringUtils.isEmpty(name)){
-            name = "三安挑片统计";
-        }
+    @GetMapping("/sanan")
+    public String readAndWrite(){
+        SimpleDateFormat format = new SimpleDateFormat("HH点mm分ss秒");
+        Date date = new Date();
+        String time = format.format(date);
 //        ReadHandler readHandler = new ReadHandler();
         List<SanAnExcel> data = new ArrayList<>();
         AtomicBoolean b = new AtomicBoolean(true);
-        ExcelUtil.readBySax("D:/Test/挑片率统计.xlsx", 0, (s,r,rl)->{
+        ExcelUtil.readBySax("D:/sanan/挑片率统计.xlsx", 0, (s,r,rl)->{
             if(b.get()){
                 b.set(false);
                 return;
@@ -63,7 +62,7 @@ public class ExcelController {
             return "没有读取到数据";
         }
         //读取sheet2参数
-        ExcelReader readerCode = ExcelUtil.getReader("D:/Test/挑片率统计.xlsx",1);
+        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/挑片率统计.xlsx",1);
         List<SanAnCode> code = readerCode.readAll(SanAnCode.class);
         ArrayList<SanAnExcel> objects = new ArrayList<>();
         for (SanAnExcel sanAnExcel : data) {
@@ -108,13 +107,25 @@ public class ExcelController {
             ExcelResultSanAn resultSanAn = new ExcelResultSanAn();
             resultSanAn.set下线品名(key);
             resultSanAn.set可投片数(value.size());
+            resultSanAn.set快测尺寸(value.get(0).get快测尺寸());
             result.add(resultSanAn);
         });
         for (ExcelResultSanAn resultSanAn : result) {
             resultSanAn.set比例(numberFormat.format((float)resultSanAn.get可投片数()/(float)size*100)+"%");
         }
-        String path="D:\\三安\\";
-        BigExcelWriter writer= ExcelUtil.getBigWriter(path+name+".xlsx");
+        ExcelResultSanAn resultSanAn1 = new ExcelResultSanAn();
+        resultSanAn1.set下线品名("不能投片");
+        resultSanAn1.set可投片数(size-objects.size());
+        resultSanAn1.set快测尺寸("");
+        resultSanAn1.set比例(numberFormat.format((float)(size-objects.size())/(float)size*100)+"%");
+        result.add(resultSanAn1);
+        ExcelResultSanAn resultSanAn2 = new ExcelResultSanAn();
+        resultSanAn2.set下线品名("总片数");
+        resultSanAn2.set可投片数(size);
+        resultSanAn2.set快测尺寸("");
+        result.add(resultSanAn2);
+        String path="D:\\挑片率计算导出\\";
+        BigExcelWriter writer= ExcelUtil.getBigWriter(path+"挑片结果查询"+time+".xlsx");
         // 一次性写出内容，使用默认样式
         writer.write(objects);
         writer.setSheet("比例");
@@ -123,6 +134,6 @@ public class ExcelController {
         // 关闭writer，释放内存
 //        writer.close();
         readerCode.close();
-        return "搞定";
+        return "鸿珊大妹子:搞定";
     }
 }

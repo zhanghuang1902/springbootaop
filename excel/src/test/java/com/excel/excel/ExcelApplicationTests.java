@@ -13,7 +13,6 @@ class ExcelApplicationTests {
 
     @Test
     void contextLoads() {
-        excelController.readAndWrite("123");
     }
 
 }
