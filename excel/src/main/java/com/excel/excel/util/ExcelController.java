@@ -38,7 +38,7 @@ public class ExcelController {
 //        ReadHandler readHandler = new ReadHandler();
         List<SanAnExcel> data = new ArrayList<>();
         AtomicBoolean b = new AtomicBoolean(true);
-        ExcelUtil.readBySax("D:/sanan/挑片率统计22.xlsx", 0, (s,r,rl)->{
+        ExcelUtil.readBySax("D:/sanan/挑片率统计44.xlsx", 0, (s,r,rl)->{
             if(b.get()){
                 b.set(false);
                 return;
@@ -64,12 +64,13 @@ public class ExcelController {
             return "没有读取到数据";
         }
         //读取sheet2参数
-        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/挑片率统计22.xlsx",1);
+        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/挑片率统计44.xlsx",1);
         List<SanAnCode> code = readerCode.readAll(SanAnCode.class);
         ArrayList<SanAnExcel> objects = new ArrayList<>();
         for (SanAnExcel sanAnExcel : data) {
             for (SanAnCode sanAnCode : code) {
                     if(sanAnExcel.getSmpWld1Avg()!=null
+                            && sanAnExcel.get快测尺寸()!=null && sanAnCode.get快测尺寸().equals(sanAnExcel.get快测尺寸())
                             && ((NumberUtil.compare(sanAnCode.get波长min(),sanAnExcel.getSmpWld1Avg())==-1 && NumberUtil.compare(sanAnCode.get波长max(),sanAnExcel.getSmpWld1Avg())==1) || (NumberUtil.compare(sanAnCode.get波长min(),sanAnExcel.getSmpWld1Avg())==0 || NumberUtil.compare(sanAnCode.get波长max(),sanAnExcel.getSmpWld1Avg())==0))
                             && sanAnExcel.getSmpLop1Avg()!=null &&
                             ((NumberUtil.compare(sanAnCode.get亮度min(),sanAnExcel.getSmpLop1Avg())==-1 &&NumberUtil.compare(sanAnCode.get亮度max(),sanAnExcel.getSmpLop1Avg())==1) || (NumberUtil.compare(sanAnCode.get亮度min(),sanAnExcel.getSmpLop1Avg())==0 || NumberUtil.compare(sanAnCode.get亮度max(),sanAnExcel.getSmpLop1Avg())==0))
@@ -85,10 +86,10 @@ public class ExcelController {
                             ((NumberUtil.compare(sanAnCode.getESD4000min(),sanAnExcel.getEsd4000pct())==-1 &&NumberUtil.compare(sanAnCode.getESD4000max(),sanAnExcel.getEsd4000pct())==1) || (NumberUtil.compare(sanAnCode.getESD4000min(),sanAnExcel.getEsd4000pct())==0 || NumberUtil.compare(sanAnCode.getESD4000max(),sanAnExcel.getEsd4000pct())==0))
                             && sanAnExcel.get最终等级()!=null && sanAnCode.get最终等级().indexOf(sanAnExcel.get最终等级())!=-1
                             && sanAnExcel.get表面等级()!=null && sanAnCode.get表面等级().indexOf(sanAnExcel.get表面等级())!=-1
-                            && sanAnExcel.get快测尺寸()!=null && sanAnCode.get快测尺寸().indexOf(sanAnExcel.get快测尺寸())!=-1)
+                            )
                     {
                         sanAnExcel.set可投产品(sanAnCode.get投片型号());
-                        sanAnExcel.set快测尺寸(sanAnCode.get快测尺寸());
+//                        sanAnExcel.set快测尺寸(sanAnCode.get快测尺寸());
                         objects.add(sanAnExcel);
                         break;
                     }
