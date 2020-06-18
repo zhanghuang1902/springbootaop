@@ -38,7 +38,7 @@ public class ExcelController {
 //        ReadHandler readHandler = new ReadHandler();
         List<SanAnExcel> data = new ArrayList<>();
         AtomicBoolean b = new AtomicBoolean(true);
-        ExcelUtil.readBySax("D:/sanan/挑片率统计44.xlsx", 0, (s,r,rl)->{
+        ExcelUtil.readBySax("D:/sanan/挑片率统计.xlsx", 0, (s,r,rl)->{
             if(b.get()){
                 b.set(false);
                 return;
@@ -64,7 +64,7 @@ public class ExcelController {
             return "没有读取到数据";
         }
         //读取sheet2参数
-        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/挑片率统计44.xlsx",1);
+        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/挑片率统计.xlsx",1);
         List<SanAnCode> code = readerCode.readAll(SanAnCode.class);
         ArrayList<SanAnExcel> objects = new ArrayList<>();
         for (SanAnExcel sanAnExcel : data) {
@@ -93,13 +93,14 @@ public class ExcelController {
                         objects.add(sanAnExcel);
                         break;
                     }
-
             }
 
         }
         //计算比例
         //总条数
         int size = data.size();
+        //不符合条件
+        data.removeAll(objects);
         List<ExcelResultSanAn> result = new ArrayList<>();
         // 创建一个数值格式化对象
         NumberFormat numberFormat = NumberFormat.getInstance();
@@ -134,6 +135,8 @@ public class ExcelController {
         writer.write(objects);
         writer.setSheet("比例");
         writer.write(result);
+        writer.setSheet("不可投片数");
+        writer.write(data);
         writer.flush();
         // 关闭writer，释放内存
 //        writer.close();
