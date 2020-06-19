@@ -38,7 +38,7 @@ public class ExcelController {
 //        ReadHandler readHandler = new ReadHandler();
         List<SanAnExcel> data = new ArrayList<>();
         AtomicBoolean b = new AtomicBoolean(true);
-        ExcelUtil.readBySax("D:/sanan/挑片率统计11.csv", 0, (s,r,rl)->{
+        ExcelUtil.readBySax("D:/sanan/挑片率统计.csv", 0, (s,r,rl)->{
             if(b.get()){
                 b.set(false);
                 return;
@@ -67,7 +67,7 @@ public class ExcelController {
             return "没有读取到数据";
         }
         //读取sheet2参数
-        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/挑片率统计11.csv",1);
+        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/挑片率统计.csv",1);
         List<SanAnCode> code = readerCode.readAll(SanAnCode.class);
         ArrayList<SanAnExcel> objects = new ArrayList<>();
         for (SanAnExcel sanAnExcel : data) {
