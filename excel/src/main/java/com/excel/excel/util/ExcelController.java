@@ -38,9 +38,12 @@ public class ExcelController {
 //        ReadHandler readHandler = new ReadHandler();
         List<SanAnExcel> data = new ArrayList<>();
         AtomicBoolean b = new AtomicBoolean(true);
-        ExcelUtil.readBySax("D:/sanan/挑片率统计11.xlsx", 0, (s,r,rl)->{
+        ExcelUtil.readBySax("D:/sanan/挑片率统计11.csv", 0, (s,r,rl)->{
             if(b.get()){
                 b.set(false);
+                return;
+            }
+            if(rl.get(44)==null && rl.get(45)==null && rl.get(47)==null && rl.get(55)==null && rl.get(56)==null && rl.get(60)!=null && rl.get(66)==null){
                 return;
             }
             if(rl.get(44)!=null || rl.get(45)!=null || rl.get(47)!=null || rl.get(55)!=null || rl.get(56)!=null || rl.get(60)!=null || rl.get(66)!=null){
@@ -64,7 +67,7 @@ public class ExcelController {
             return "没有读取到数据";
         }
         //读取sheet2参数
-        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/挑片率统计11.xlsx",1);
+        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/挑片率统计11.csv",1);
         List<SanAnCode> code = readerCode.readAll(SanAnCode.class);
         ArrayList<SanAnExcel> objects = new ArrayList<>();
         for (SanAnExcel sanAnExcel : data) {
@@ -89,7 +92,6 @@ public class ExcelController {
                             )
                     {
                         sanAnExcel.set可投产品(sanAnCode.get投片型号());
-//                        sanAnExcel.set快测尺寸(sanAnCode.get快测尺寸());
                         objects.add(sanAnExcel);
                         break;
                     }
