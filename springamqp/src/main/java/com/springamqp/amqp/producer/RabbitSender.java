@@ -1,5 +1,6 @@
 package com.springamqp.amqp.producer;
 
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
@@ -24,10 +25,10 @@ public class RabbitSender {
     private RabbitTemplate rabbitTemplate;
 
     final RabbitTemplate.ConfirmCallback confirmCallback = (correlationData, b, s) -> {
-        System.err.println("correlationData"+correlationData);
-        System.err.println(b);
+        System.out.println("correlationData"+correlationData);
+        System.out.println(b);
         if(!b){
-            System.err.println("异常处理....");
+            System.out.println("异常处理....");
         }
 
     };
@@ -39,6 +40,7 @@ public class RabbitSender {
         Message  msg = MessageBuilder.createMessage(message, mhs);
         rabbitTemplate.setConfirmCallback(confirmCallback);
         rabbitTemplate.setReturnCallback(returnCallback);
-        rabbitTemplate.convertAndSend("exchange-1", "springboot.hello",msg);
+        CorrelationData data = new CorrelationData("1234567890");
+        rabbitTemplate.convertAndSend("exchange-1", "spring.hello",msg,data);
     }
 }

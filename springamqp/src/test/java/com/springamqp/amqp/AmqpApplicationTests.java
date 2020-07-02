@@ -1,5 +1,6 @@
 package com.springamqp.amqp;
 
+import com.springamqp.amqp.producer.RabbitSender;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.AmqpException;
@@ -25,6 +26,16 @@ public class AmqpApplicationTests {
 
     @Autowired
     private RabbitAdmin rabbitAdmin;
+
+    @Autowired
+    private RabbitSender rabbitSender;
+
+    @Test
+    public void rabbitSendMsg()throws Exception{
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("number", "12345");
+        rabbitSender.sendMsg("hello", map);
+    }
 
     @Test
     public  void  rabbitAdmin() throws Exception{

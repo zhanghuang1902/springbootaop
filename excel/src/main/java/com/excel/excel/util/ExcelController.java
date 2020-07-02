@@ -4,16 +4,14 @@ import cn.hutool.core.util.NumberUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -144,5 +142,43 @@ public class ExcelController {
 //        writer.close();
         readerCode.close();
         return "鸿珊大妹子:搞定";
+    }
+
+    @GetMapping("/excel")
+    public String excel(){
+        AtomicBoolean b = new AtomicBoolean(true);
+        List<SanAnCount> bean = new ArrayList<>();
+        HashMap<String, String> map = new HashMap<>();
+        ArrayList<String> list2 = new ArrayList<>();
+        ExcelUtil.readBySax("D:/sanan/excel.xlsx", 0, (s,r,rl)->{
+            if(b.get()){
+                b.set(false);
+                return;
+            }
+            System.out.println(rl);
+            if(rl.get(0)!=""){
+                map.put((String) rl.get(0),(String) rl.get(1));
+            }
+            if(rl.get(2)!=""){
+                list2.add(rl.get(2).toString());
+            }
+            if("0".equals(rl.get(2).toString())){
+                Map<String, String> collect = list2.stream().filter(item -> map.containsKey(item)).collect(Collectors.toMap(item -> item, item -> map.get(item)));
+                collect.forEach((key,value)->{
+                    SanAnCount sanAnCount = new SanAnCount();
+                    sanAnCount.set现有异常(key);
+                    sanAnCount.set现有异常原因(value);
+                    bean.add(sanAnCount);
+                });
+            }
+        });
+        // 通过工具类创建writer
+        ExcelWriter writer = ExcelUtil.getWriter("D:/sanan/excel.xlsx");
+        writer.setSheet("异常包含结果");
+        writer.setSheet(1);
+        writer.write(bean);
+        // 关闭writer，释放内存
+        writer.close();
+        return "空";
     }
 }
