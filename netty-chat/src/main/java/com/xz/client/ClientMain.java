@@ -10,6 +10,5 @@ package com.xz.client;
 public class ClientMain {
     public static void main(String[] args) {
         ClientFrame instance = ClientFrame.INSTANCE;
-
     }
 }

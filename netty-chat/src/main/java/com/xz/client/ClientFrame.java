@@ -1,6 +1,8 @@
 package com.xz.client;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,13 +17,13 @@ public class ClientFrame extends Frame {
 
     public static final ClientFrame INSTANCE = new ClientFrame();
 
-    private TextField textField;
+    private final TextField textField;
 
     private TextArea textArea;
 
     private ChatClient chatClient;
 
-    public ClientFrame() throws HeadlessException {
+    private ClientFrame() throws HeadlessException {
         setLocation(200,300);
         setSize(400,300);
         textField = new TextField();
@@ -37,6 +39,12 @@ public class ClientFrame extends Frame {
         setTitle("聊天室");
         add(textArea, BorderLayout.CENTER);
         add(textField,BorderLayout.SOUTH);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
         chatClient = new ChatClient();
         setVisible(true);
         new Thread(()->chatClient.connect()).start();

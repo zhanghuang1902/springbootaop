@@ -7,8 +7,10 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.CharsetUtil;
+import io.netty.util.ReferenceCountUtil;
 
 import java.awt.*;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,9 +39,18 @@ public class ChatClient {
                     ch.pipeline().addLast(new ChannelInboundHandlerAdapter(){
                         @Override
                         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                            ByteBuf byteBuf = (ByteBuf) msg;
-                            TextArea textArea = ClientFrame.INSTANCE.getTextArea();
-                            textArea.setText(textArea.getText()+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) +" "+ byteBuf.toString(CharsetUtil.UTF_8)+"\r\n");
+                            ByteBuf byteBuf = null;
+                            try {
+                                byteBuf = (ByteBuf) msg;
+                                TextArea textArea = ClientFrame.INSTANCE.getTextArea();
+                                textArea.setText(textArea.getText()+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) +" "+ byteBuf.toString(CharsetUtil.UTF_8)+"\r\n");
+                            }finally {
+                                if(byteBuf != null){
+                                    if(byteBuf.refCnt() != 0){
+                                        ReferenceCountUtil.release(byteBuf);
+                                    }
+                                }
+                            }
                         }
 
                         @Override
