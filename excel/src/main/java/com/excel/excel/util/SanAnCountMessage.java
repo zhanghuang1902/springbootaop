@@ -1,14 +1,14 @@
 package com.excel.excel.util;
 
 /**
- * ClassName:SanAnCount
+ * ClassName:SanAnCountMessage
  * Package:com.excel.excel.util
  * Description:
  *
- * @date:2020/7/2 14:14
+ * @date:2020/7/16 15:14
  * @author:zh
  */
-public class SanAnCount {
+public class SanAnCountMessage {
 
     private String 异常总表;
 

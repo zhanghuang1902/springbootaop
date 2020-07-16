@@ -5,6 +5,8 @@ import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +15,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/excel")
 public class ExcelController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelController.class);
 
     @GetMapping("/sanan")
     public String readAndWrite(){
@@ -143,41 +147,92 @@ public class ExcelController {
         readerCode.close();
         return "鸿珊大妹子:搞定";
     }
+//
+//    @GetMapping("/excel")
+//    public String excel(){
+//        AtomicBoolean b = new AtomicBoolean(true);
+//        List<SanAnCount> bean = new ArrayList<>();
+//        HashMap<String, String> map = new HashMap<>();
+//        ArrayList<String> list2 = new ArrayList<>();
+//        ExcelUtil.readBySax("D:/sanan/excel.xlsx", 0, (s,r,rl)->{
+//            if(b.get()){
+//                b.set(false);
+//                return;
+//            }
+//            if(rl.get(0)!=""){
+//                map.put((String) rl.get(0),(String) rl.get(1));
+//            }
+//            if(rl.get(2)!=""){
+//                list2.add(rl.get(2).toString());
+//            }
+//            if("0".equals(rl.get(2).toString())){
+//                Map<String, String> collect = list2.stream().filter(item -> map.containsKey(item)).collect(Collectors.toMap(item -> item, item -> map.get(item)));
+//                collect.forEach((key,value)->{
+//                    SanAnCount sanAnCount = new SanAnCount();
+//                    sanAnCount.set现有异常(key);
+//                    sanAnCount.set现有异常原因(value);
+//                    bean.add(sanAnCount);
+//                });
+//            }
+//        });
+//        // 通过工具类创建writer
+//        ExcelWriter writer = ExcelUtil.getWriter("D:/sanan/excel1.xlsx");
+//        writer.setSheet("异常包含结果");
+//        writer.setSheet(1);
+//        writer.write(bean);
+//        // 关闭writer，释放内存
+//        writer.close();
+//        return "成功";
+//    }
+
+
 
     @GetMapping("/excel")
-    public String excel(){
-        AtomicBoolean b = new AtomicBoolean(true);
-        List<SanAnCount> bean = new ArrayList<>();
-        HashMap<String, String> map = new HashMap<>();
-        ArrayList<String> list2 = new ArrayList<>();
-        ExcelUtil.readBySax("D:/sanan/excel.xlsx", 0, (s,r,rl)->{
-            if(b.get()){
-                b.set(false);
-                return;
-            }
-            if(rl.get(0)!=""){
-                map.put((String) rl.get(0),(String) rl.get(1));
-            }
-            if(rl.get(2)!=""){
-                list2.add(rl.get(2).toString());
-            }
-            if("0".equals(rl.get(2).toString())){
-                Map<String, String> collect = list2.stream().filter(item -> map.containsKey(item)).collect(Collectors.toMap(item -> item, item -> map.get(item)));
-                collect.forEach((key,value)->{
+    public String excel1(){
+        LOGGER.info("excel");
+        ExcelWriter writer = null;
+        try {
+            long start = System.currentTimeMillis();
+            AtomicBoolean b = new AtomicBoolean(true);
+            List<SanAnCount> bean = new ArrayList<>();
+            Set<String> set = new HashSet<>();
+            ExcelUtil.readBySax("D:/sanan/excel.xlsx", 0, (s,r,rl)->{
+                if(b.get()){
+                    b.set(false);
+                    return;
+                }
+                if(rl.get(2)!="" && !(rl.get(2) instanceof Long)){
+                    set.add((String)rl.get(2));
+                }
+                if(!(rl.get(2) instanceof Long)){
                     SanAnCount sanAnCount = new SanAnCount();
-                    sanAnCount.set现有异常(key);
-                    sanAnCount.set现有异常原因(value);
+                    sanAnCount.set异常总表(rl.get(0).toString());
+                    sanAnCount.set异常原因(rl.get(1).toString());
+                    sanAnCount.set库存表(rl.get(2).toString());
                     bean.add(sanAnCount);
-                });
+                }
+            });
+            for (SanAnCount item : bean) {
+                if((item.get异常总表()==null || "".equals(item.get异常总表()))){
+                    LOGGER.info("开始写出");
+                    break;
+                }
+                if(set.contains(item.get异常总表())){
+                    item.set现有异常(item.get异常总表());
+                    item.set现有异常原因(item.get异常原因());
+                    set.remove(item.get异常总表());
+                }
             }
-        });
-        // 通过工具类创建writer
-        ExcelWriter writer = ExcelUtil.getWriter("D:/sanan/excel.xlsx");
-        writer.setSheet("异常包含结果");
-        writer.setSheet(1);
-        writer.write(bean);
-        // 关闭writer，释放内存
-        writer.close();
-        return "成功";
+            // 通过工具类创建writer
+            writer = ExcelUtil.getBigWriter("D:/sanan/excel(结果).xlsx");
+            writer.write(bean);
+            // 关闭writer，释放内存
+            writer.flush();
+            LOGGER.info("写出完成");
+            return "成功,耗时："+(System.currentTimeMillis()-start)/1000 + " 秒";
+        }catch (Exception e){
+            LOGGER.error("excel1异常",e.getCause());
+            return "失败";
+        }
     }
 }
