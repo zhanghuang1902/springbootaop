@@ -147,45 +147,6 @@ public class ExcelController {
         readerCode.close();
         return "鸿珊大妹子:搞定";
     }
-//
-//    @GetMapping("/excel")
-//    public String excel(){
-//        AtomicBoolean b = new AtomicBoolean(true);
-//        List<SanAnCount> bean = new ArrayList<>();
-//        HashMap<String, String> map = new HashMap<>();
-//        ArrayList<String> list2 = new ArrayList<>();
-//        ExcelUtil.readBySax("D:/sanan/excel.xlsx", 0, (s,r,rl)->{
-//            if(b.get()){
-//                b.set(false);
-//                return;
-//            }
-//            if(rl.get(0)!=""){
-//                map.put((String) rl.get(0),(String) rl.get(1));
-//            }
-//            if(rl.get(2)!=""){
-//                list2.add(rl.get(2).toString());
-//            }
-//            if("0".equals(rl.get(2).toString())){
-//                Map<String, String> collect = list2.stream().filter(item -> map.containsKey(item)).collect(Collectors.toMap(item -> item, item -> map.get(item)));
-//                collect.forEach((key,value)->{
-//                    SanAnCount sanAnCount = new SanAnCount();
-//                    sanAnCount.set现有异常(key);
-//                    sanAnCount.set现有异常原因(value);
-//                    bean.add(sanAnCount);
-//                });
-//            }
-//        });
-//        // 通过工具类创建writer
-//        ExcelWriter writer = ExcelUtil.getWriter("D:/sanan/excel1.xlsx");
-//        writer.setSheet("异常包含结果");
-//        writer.setSheet(1);
-//        writer.write(bean);
-//        // 关闭writer，释放内存
-//        writer.close();
-//        return "成功";
-//    }
-
-
 
     @GetMapping("/excel")
     public String excel1(){
@@ -195,14 +156,14 @@ public class ExcelController {
             long start = System.currentTimeMillis();
             AtomicBoolean b = new AtomicBoolean(true);
             List<SanAnCount> bean = new ArrayList<>();
-            Set<String> set = new HashSet<>();
+            Map<String,String> set = new HashMap<>();
             ExcelUtil.readBySax("D:/sanan/excel.xlsx", 0, (s,r,rl)->{
                 if(b.get()){
                     b.set(false);
                     return;
                 }
-                if(rl.get(2)!="" && !(rl.get(2) instanceof Long)){
-                    set.add((String)rl.get(2));
+                if(rl.get(0)!="" && rl.get(1)!=""){
+                    set.put((String)rl.get(0), (String) rl.get(1));
                 }
                 if(!(rl.get(2) instanceof Long)){
                     SanAnCount sanAnCount = new SanAnCount();
@@ -213,14 +174,13 @@ public class ExcelController {
                 }
             });
             for (SanAnCount item : bean) {
-                if((item.get异常总表()==null || "".equals(item.get异常总表()))){
+                if((item.get库存表()==null || "".equals(item.get库存表()))){
                     LOGGER.info("开始写出");
                     break;
                 }
-                if(set.contains(item.get异常总表())){
-                    item.set现有异常(item.get异常总表());
-                    item.set现有异常原因(item.get异常原因());
-                    set.remove(item.get异常总表());
+                if(set.containsKey(item.get库存表())){
+                    item.set现有异常(item.get库存表());
+                    item.set现有异常原因(set.get(item.get库存表()));
                 }
             }
             // 通过工具类创建writer
@@ -229,7 +189,7 @@ public class ExcelController {
             // 关闭writer，释放内存
             writer.flush();
             LOGGER.info("写出完成");
-            return "成功,耗时："+(System.currentTimeMillis()-start)/1000 + " 秒";
+            return "导出成功,耗时："+(System.currentTimeMillis()-start)/1000 + " 秒。使用完毕，将excel(结果).xlsx 删除";
         }catch (Exception e){
             LOGGER.error("excel1异常",e.getCause());
             return "失败";
