@@ -33,6 +33,10 @@ public class SanAnCode {
 
     private Double ESD2000max;
 
+    private Double ESD3000min;
+
+    private Double ESD3000max;
+
     private Double ESD4000min;
 
     private Double ESD4000max;
@@ -40,6 +44,32 @@ public class SanAnCode {
     private String 最终等级;
 
     private String 表面等级;
+
+    private String 结构码;
+
+    public Double getESD3000min() {
+        return ESD3000min;
+    }
+
+    public void setESD3000min(Double ESD3000min) {
+        this.ESD3000min = ESD3000min;
+    }
+
+    public Double getESD3000max() {
+        return ESD3000max;
+    }
+
+    public void setESD3000max(Double ESD3000max) {
+        this.ESD3000max = ESD3000max;
+    }
+
+    public String get结构码() {
+        return 结构码;
+    }
+
+    public void set结构码(String 结构码) {
+        this.结构码 = 结构码;
+    }
 
     public String get快测尺寸() {
         return 快测尺寸;

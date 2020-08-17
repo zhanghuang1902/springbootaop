@@ -36,6 +36,26 @@ public class SanAnExcel extends Object {
 
     private String 可投产品;
 
+    private String 结构码;
+
+    private Double esd3000pct;
+
+    public Double getEsd3000pct() {
+        return esd3000pct;
+    }
+
+    public void setEsd3000pct(Double esd3000pct) {
+        this.esd3000pct = esd3000pct;
+    }
+
+    public String get结构码() {
+        return 结构码;
+    }
+
+    public void set结构码(String 结构码) {
+        this.结构码 = 结构码;
+    }
+
     public String get可投产品() {
         return 可投产品;
     }

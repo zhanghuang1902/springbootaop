@@ -15,7 +15,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -40,20 +39,21 @@ public class ExcelController {
 //        ReadHandler readHandler = new ReadHandler();
         List<SanAnExcel> data = new ArrayList<>();
         AtomicBoolean b = new AtomicBoolean(true);
-        ExcelUtil.readBySax("D:/sanan/挑片率统计.xlsx", 0, (s,r,rl)->{
+        ExcelUtil.readBySax("D:/sanan/J04.xlsx", 0, (s,r,rl)->{
             if(b.get()){
                 b.set(false);
                 return;
             }
-            if(rl.get(44)==null && rl.get(45)==null && rl.get(47)==null && rl.get(55)==null && rl.get(56)==null && rl.get(60)!=null && rl.get(66)==null){
+            if(rl.get(44)==null && rl.get(45)==null && rl.get(47)==null && rl.get(55)==null && rl.get(56)==null && rl.get(60)!=null && rl.get(66)==null&& rl.get(67)==null){
                 return;
             }
-            if(rl.get(44)!=null || rl.get(45)!=null || rl.get(47)!=null || rl.get(55)!=null || rl.get(56)!=null || rl.get(60)!=null || rl.get(66)!=null){
+            if(rl.get(44)!=null || rl.get(45)!=null || rl.get(47)!=null || rl.get(55)!=null || rl.get(56)!=null || rl.get(60)!=null || rl.get(66)!=null || rl.get(67)!=null){
                 SanAnExcel sanAnExcel = new SanAnExcel();
                 sanAnExcel.set磊晶号((String)rl.get(4));
                 sanAnExcel.set最终等级((String)rl.get(24));
                 sanAnExcel.set表面等级((String)rl.get(25));
                 sanAnExcel.set快测尺寸((String)rl.get(39));
+                sanAnExcel.set结构码((String)rl.get(32));
                 sanAnExcel.setIV(rl.get(41)==""?null:Double.parseDouble(rl.get(41).toString()));
                 sanAnExcel.setSmpWld1Avg(rl.get(44)==null?null:Double.parseDouble(rl.get(44).toString()));
                 sanAnExcel.setSmpLop1Avg(rl.get(45)==null?null:Double.parseDouble(rl.get(45).toString()));
@@ -62,6 +62,7 @@ public class ExcelController {
                 sanAnExcel.setEsd4000pct(rl.get(56)==null?null:Double.parseDouble(rl.get(56).toString()));
                 sanAnExcel.setWdStd(rl.get(60)==null?null:Double.parseDouble(rl.get(60).toString()));
                 sanAnExcel.setVF4avg(rl.get(66)==null?null:Double.parseDouble(rl.get(66).toString()));
+                sanAnExcel.setEsd3000pct(rl.get(67)==null?null:Double.parseDouble(rl.get(67).toString()));
                 data.add(sanAnExcel);
             }
         });
@@ -69,7 +70,7 @@ public class ExcelController {
             return "没有读取到数据";
         }
         //读取sheet2参数
-        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/挑片率统计.xlsx",1);
+        ExcelReader readerCode = ExcelUtil.getReader("D:/sanan/J04.xlsx",1);
         List<SanAnCode> code = readerCode.readAll(SanAnCode.class);
         ArrayList<SanAnExcel> objects = new ArrayList<>();
         for (SanAnExcel sanAnExcel : data) {
@@ -89,8 +90,11 @@ public class ExcelController {
                             ((NumberUtil.compare(sanAnCode.getESD2000min(),sanAnExcel.getEsd2000pct())==-1 &&NumberUtil.compare(sanAnCode.getESD2000max(),sanAnExcel.getEsd2000pct())==1) || (NumberUtil.compare(sanAnCode.getESD2000min(),sanAnExcel.getEsd2000pct())==0 || NumberUtil.compare(sanAnCode.getESD2000max(),sanAnExcel.getEsd2000pct())==0))
                             && sanAnExcel.getEsd4000pct()!=null &&
                             ((NumberUtil.compare(sanAnCode.getESD4000min(),sanAnExcel.getEsd4000pct())==-1 &&NumberUtil.compare(sanAnCode.getESD4000max(),sanAnExcel.getEsd4000pct())==1) || (NumberUtil.compare(sanAnCode.getESD4000min(),sanAnExcel.getEsd4000pct())==0 || NumberUtil.compare(sanAnCode.getESD4000max(),sanAnExcel.getEsd4000pct())==0))
+                            && sanAnExcel.getEsd3000pct()!=null &&
+                            ((NumberUtil.compare(sanAnCode.getESD3000min(),sanAnExcel.getEsd3000pct())==-1 &&NumberUtil.compare(sanAnCode.getESD3000max(),sanAnExcel.getEsd3000pct())==1) || (NumberUtil.compare(sanAnCode.getESD3000min(),sanAnExcel.getEsd3000pct())==0 || NumberUtil.compare(sanAnCode.getESD3000max(),sanAnExcel.getEsd3000pct())==0))
                             && sanAnExcel.get最终等级()!=null && sanAnCode.get最终等级().indexOf(sanAnExcel.get最终等级())!=-1
                             && sanAnExcel.get表面等级()!=null && sanAnCode.get表面等级().indexOf(sanAnExcel.get表面等级())!=-1
+                            && sanAnExcel.get结构码()!=null && sanAnCode.get结构码().indexOf(sanAnExcel.get结构码())!=-1
                             )
                     {
                         sanAnExcel.set可投产品(sanAnCode.get投片型号());
