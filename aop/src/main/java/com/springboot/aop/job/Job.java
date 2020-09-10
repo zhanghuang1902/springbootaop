@@ -19,6 +19,7 @@ public class Job {
     @XxlJob("demoJobHandler")
     public ReturnT<String> execute(String param) {
         XxlJobLogger.log("hello world.");
+        System.out.println("hahaha");
         return ReturnT.SUCCESS;
     }
 }
