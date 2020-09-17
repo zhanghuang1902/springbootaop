@@ -61,7 +61,7 @@ public class WebSocket {
             //先给所有人发送通知，说我上线了
             Map<String,Object> map1 = Maps.newHashMap();
             map1.put("messageType",1);
-            map1.put("userId",userId);
+            map1.put("userId",userId+"上线了");
             sendMessageAll(JSON.toJSONString(map1),userId);
 
             //把自己的信息加入到map当中去

@@ -32,11 +32,13 @@ public class TestController {
     }
 
     @GetMapping("/sendAll")
-    public String sendAll(@RequestParam("msg") String msg) throws IOException {
+    public String sendAll(@RequestParam("msg") String msg) throws IOException, InterruptedException {
 
         String fromUserId="system";//其实没用上
-        webSocket.sendMessageAll(msg,fromUserId);
-
+        for (int i = 0; i < 10; i++){
+            Thread.sleep(1000);
+            webSocket.sendMessageAll("我是第"+i,fromUserId);
+        }
         return "推送成功";
     }
 }
