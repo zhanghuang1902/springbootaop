@@ -23,7 +23,7 @@ public class AopService {
     public void pointCut() {}
 
 
-    @Before("pointCut()")
+    @Before("pointCut()") //前进入一次
     public void before(JoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {
@@ -35,7 +35,7 @@ public class AopService {
         System.out.println("before 能修改参数吗?");
     }
 
-    @AfterReturning(value = "pointCut()",returning = "keys")
+    @AfterReturning(value = "pointCut()",returning = "keys") //后进入一次
     public void doAfterReturning(JoinPoint joinPoint,Object keys){
         if(keys instanceof OutPutBean){
             OutPutBean bean = (OutPutBean) keys;
@@ -43,7 +43,7 @@ public class AopService {
         }
     }
 
-    //@Around("pointCut()")
+    //@Around("pointCut()") 前后各进入一次
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {
