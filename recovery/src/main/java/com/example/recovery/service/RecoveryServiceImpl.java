@@ -60,6 +60,24 @@ public class RecoveryServiceImpl implements RecoveryService {
     }
 
 
+    @Override
+    public void recoverTest() {
+        List<String> list = new ArrayList<>();
+        //查询Test店员id
+        List<String> clerkIds=recoverMapper.searchClerkIds();
+        //查询Test医生id
+        List<String> doctorIds=recoverMapper.searchDoctorIds();
+        //查询Test咨询师id
+        List<String> consultantIds=recoverMapper.consultantIds();
+        //查询Test客服id
+        List<String> customerIds=recoverMapper.customerIds();
+        list.addAll(customerIds);
+        list.addAll(clerkIds);
+        list.addAll(doctorIds);
+        list.addAll(consultantIds);
+        recoverMapper.updateTest(list);
+    }
+
     private String encName(String patientName){
         if(StringUtils.isBlank(patientName)||patientName.length()==1){
             return patientName;

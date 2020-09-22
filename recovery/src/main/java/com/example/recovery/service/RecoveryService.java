@@ -10,4 +10,6 @@ package com.example.recovery.service;
  */
 public interface RecoveryService {
     Integer recovery();
+
+    void recoverTest();
 }

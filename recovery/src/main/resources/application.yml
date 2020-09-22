@@ -2,9 +2,9 @@ server:
   port: 8091
 spring:
   datasource:
-    url:  jdbc:mysql://localhost:3306/zhtest?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url:  jdbc:mysql://uat-assistant.haoyuanyiliao.com:30020/hymol_user_center_dev?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: root
-    password: root
+    password: password
     type: com.alibaba.druid.pool.DruidDataSource
 
 mybatis:

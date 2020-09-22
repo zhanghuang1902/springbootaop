@@ -21,4 +21,14 @@ public interface RecoverMapper {
     List<ShareDto> selectShareMessage();
 
     Integer addMessage(List<MessageBean> beans);
+
+    List<String> searchClerkIds();
+
+    List<String> searchDoctorIds();
+
+    List<String> consultantIds();
+
+    List<String> customerIds();
+
+    void updateTest(List<String> list);
 }

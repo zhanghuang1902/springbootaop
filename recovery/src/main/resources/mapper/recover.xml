@@ -8,6 +8,17 @@
             (#{item.id}, #{item.title}, #{item.content}, #{item.relationId}, #{item.relationType}, #{item.deleteFlag},#{item.readFlag},#{item.userId},#{item.userDiv},#{item.userId},#{item.createTime}, #{item.userId},CURRENT_TIMESTAMP(3))
         </foreach>
     </insert>
+    <update id="updateTest">
+        update
+            hymol_user
+        set
+            test='1'
+        where
+            user_id in
+            <foreach collection="list" separator="," open="(" item="item" index="index" close=")">
+                #{item}
+            </foreach>
+    </update>
 
 
     <select id="select" resultType="java.lang.String">
@@ -27,5 +38,37 @@
             hymol_share a left join hymol_triage_info b on a.triage_id=b.triage_id
                           left join hymol_doctor_info c on b.director_id=c.dr_id
                           left join hymol_hospital_info e on c.hospital=e.hospital_id
+    </select>
+    <select id="searchClerkIds" resultType="java.lang.String">
+        select
+            clerk_id
+        from
+            hymol_clerk_info
+        where
+            test='1'
+    </select>
+    <select id="searchDoctorIds" resultType="java.lang.String">
+        select
+            dr_id
+        from
+            hymol_doctor_info
+        where
+            test='1'
+    </select>
+    <select id="consultantIds" resultType="java.lang.String">
+        select
+            consultant_id
+        from
+            hymol_consultant
+        where
+            test='1'
+    </select>
+    <select id="customerIds" resultType="java.lang.String">
+        select
+            id
+        from
+            hymol_customer_service
+        where
+            test='1'
     </select>
 </mapper>

@@ -21,6 +21,6 @@ public class StartUp implements CommandLineRunner {
     private RecoveryController recoveryController;
     @Override
     public void run(String... args) throws Exception {
-            recoveryController.recovery();
+            recoveryController.recoverTest();
     }
 }

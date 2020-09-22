@@ -36,6 +36,12 @@ public class RecoveryController {
         return "success";
     }
 
+    @PostMapping("/recoverTest")
+    public String recoverTest() {
+        recoveryService.recoverTest();
+        return "success";
+    }
+
     public static void main(String[] args) {
         List<TestBean> list = new ArrayList<>();
         TestBean testBean1 = new TestBean();
