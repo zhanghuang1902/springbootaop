@@ -1,0 +1,18 @@
+server:
+  port: 7001
+spring:
+  datasource:
+    url: jdbc:mysql://uat-assistant.haoyuanyiliao.com:30020/hymol_user_center_dev?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.example.entity
+
+#showSql
+logging:
+  level:
+    com:
+      example:
+        mapper : debug
