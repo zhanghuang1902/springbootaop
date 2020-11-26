@@ -2,10 +2,30 @@ server:
   port: 7001
 spring:
   datasource:
-    url: jdbc:mysql://uat-assistant.haoyuanyiliao.com:30020/hymol_user_center_dev?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
-    username: root
-    password: password
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    one:
+      url: jdbc:mysql://uat-assistant.haoyuanyiliao.com:30020/hymol_user_center_dev?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      username: root
+      password: password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      initial-size: 3
+      min-idle: 3
+      max-active: 10
+      max-wait: 60000
+    two:
+      url: jdbc:mysql://uat-assistant.haoyuanyiliao.com:30020/hymol_propaganda_dev?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      username: root
+      password: password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      initial-size: 6
+      min-idle: 6
+      max-active: 20
+      max-wait: 12000
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.example.entity

@@ -1,4 +1,4 @@
-package com.springboot.mybatis.dao;
+package com.springboot.mybatis.mapper.one;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date:2020/11/26 16:04
  * @author:zh
  */
-@Mapper
 public interface MybatisMapper {
 
     String queryId();
