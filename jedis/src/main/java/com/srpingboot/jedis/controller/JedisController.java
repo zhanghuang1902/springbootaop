@@ -24,6 +24,7 @@ public class JedisController {
     public String redis(){
         Long incr = JedisUtil.incr("userCount", 1);
         String count = JedisUtil.get("userCount", 1);
+        JedisUtil.set("mykey", "expire", 10, 2);
         System.out.println(count);
         System.out.println(incr);
         return "ok";
