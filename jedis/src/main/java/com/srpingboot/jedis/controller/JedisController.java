@@ -1,9 +1,10 @@
 package com.srpingboot.jedis.controller;
 
 import com.srpingboot.jedis.util.JedisUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * ClassName:JedisController
@@ -16,17 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JedisController {
 
-
-    @Autowired
-    private JedisUtil jedisUtil;
-
     @GetMapping("/jedis")
     public String redis(){
-        Long incr = JedisUtil.incr("userCount", 1);
-        String count = JedisUtil.get("userCount", 1);
-        JedisUtil.set("mykey", "expire", 10, 2);
-        System.out.println(count);
-        System.out.println(incr);
+//        JedisUtil.lpush(3, "lsit", "山西","北京","上海");
+        String list = JedisUtil.get("lsit", 3);
+        List<String> list1 = JedisUtil.lrange("lsit", 0, -1, 3);
+        String lsit = JedisUtil.rpop("lsit", 3);
+        System.out.println(list1.toString());
+        System.out.println(lsit);
+        List<String> list2 = JedisUtil.lrange("lsit", 0, -1, 3);
+        if(list2.isEmpty()){
+            return "队列为空";
+        }
+        System.out.println(list2.toString());
+        System.out.println(list);
         return "ok";
     }
 

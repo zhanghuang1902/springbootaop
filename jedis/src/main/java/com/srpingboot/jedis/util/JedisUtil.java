@@ -210,7 +210,7 @@ public class JedisUtil {
 	 * @param indexdb 选择redis库 0-15
 	 * @return 成功 返回OK 失败返回 0
 	 */
-	public String set(byte[] key, byte[] value,int indexdb) {
+	public static String set(byte[] key, byte[] value,int indexdb) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPoolStatic.getResource();
@@ -476,7 +476,7 @@ public class JedisUtil {
 	 * @param value
 	 * @return 设置成功时返回 OK 。当 seconds 参数不合法时，返回一个错误。
 	 */
-	public String setex(String key, int seconds, String value) {
+	public static String setex(String key, int seconds, String value) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPoolStatic.getResource();
@@ -501,7 +501,7 @@ public class JedisUtil {
 	 * @param value
 	 * @return 成功返回1 如果存在 和 发生异常 返回 0
 	 */
-	public Long setnx(String key, String value) {
+	public  static Long setnx(String key, String value) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPoolStatic.getResource();
@@ -556,7 +556,7 @@ public class JedisUtil {
 	 *            单位:秒
 	 * @return 成功返回OK 失败和异常返回null
 	 */
-	public String setex(String key, String value, int seconds) {
+	public  static String setex(String key, String value, int seconds) {
 		Jedis jedis = null;
 		String res = null;
 		try {
@@ -605,7 +605,7 @@ public class JedisUtil {
 	 *            下标位置
 	 * @return 返回替换后 value 的长度
 	 */
-	public Long setrange(String key, String str, int offset) {
+	public static Long setrange(String key, String str, int offset) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPoolStatic.getResource();
@@ -662,7 +662,7 @@ public class JedisUtil {
 	 * @return 成功返回OK 失败 异常 返回 null
 	 *
 	 */
-	public String mset(String... keysvalues) {
+	public static String mset(String... keysvalues) {
 		Jedis jedis = null;
 		String res = null;
 		try {
@@ -1289,7 +1289,7 @@ public class JedisUtil {
 	 *            可以使一个string 也可以使string数组
 	 * @return 返回list的value个数
 	 */
-	public Long lpush(int indexdb, String key, String... strs) {
+	public static Long lpush(int indexdb, String key, String... strs) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -1380,7 +1380,7 @@ public class JedisUtil {
 	 * @param value
 	 * @return 成功返回OK
 	 */
-	public String lset(String key, Long index, String value) {
+	public static String lset(String key, Long index, String value) {
 		Jedis jedis = null;
 		String res = null;
 		try {
@@ -1485,7 +1485,7 @@ public class JedisUtil {
 	 * @param key
 	 * @return
 	 */
-	synchronized public String rpop(String key, int indexdb) {
+	synchronized public static String rpop(String key, int indexdb) {
 		Jedis jedis = null;
 		String res = null;
 		try {
@@ -1567,7 +1567,7 @@ public class JedisUtil {
 	 * @param key
 	 * @return
 	 */
-	public Long llen(String key) {
+	public static Long llen(String key) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -1597,7 +1597,7 @@ public class JedisUtil {
 	 * @param end
 	 * @return
 	 */
-	public List<String> lrange(String key, long start, long end, int indexdb) {
+	public static List<String> lrange(String key, long start, long end, int indexdb) {
 		Jedis jedis = null;
 		List<String> res = null;
 		try {
@@ -1625,7 +1625,7 @@ public class JedisUtil {
 	 * @param value
 	 * @return 操作成功返回 ok ，否则返回错误信息
 	 */
-	public String lset(String key, long index, String value) {
+	public static String lset(String key, long index, String value) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPoolStatic.getResource();
@@ -1838,7 +1838,7 @@ public class JedisUtil {
 	 *            可以使一个string 也可以是一个string数组
 	 * @return
 	 */
-	public Set<String> sinter(String... keys) {
+	public static Set<String> sinter(String... keys) {
 		Jedis jedis = null;
 		Set<String> res = null;
 		try {
@@ -1865,7 +1865,7 @@ public class JedisUtil {
 	 *            可以使一个string 也可以是一个string数组
 	 * @return
 	 */
-	public Long sinterstore(String dstkey, String... keys) {
+	public static Long sinterstore(String dstkey, String... keys) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -1891,7 +1891,7 @@ public class JedisUtil {
 	 *            可以使一个string 也可以是一个string数组
 	 * @return
 	 */
-	public Set<String> sunion(String... keys) {
+	public static Set<String> sunion(String... keys) {
 		Jedis jedis = null;
 		Set<String> res = null;
 		try {
@@ -1918,7 +1918,7 @@ public class JedisUtil {
 	 *            可以使一个string 也可以是一个string数组
 	 * @return
 	 */
-	public Long sunionstore(String dstkey, String... keys) {
+	public static Long sunionstore(String dstkey, String... keys) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -1948,7 +1948,7 @@ public class JedisUtil {
 	 *            set中的value
 	 * @return
 	 */
-	public Long smove(String srckey, String dstkey, String member) {
+	public  static Long smove(String srckey, String dstkey, String member) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -1973,7 +1973,7 @@ public class JedisUtil {
 	 * @param key
 	 * @return
 	 */
-	public Long scard(String key) {
+	public static Long scard(String key) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -1999,7 +1999,7 @@ public class JedisUtil {
 	 * @param member
 	 * @return
 	 */
-	public Boolean sismember(String key, String member) {
+	public  static Boolean sismember(String key, String member) {
 		Jedis jedis = null;
 		Boolean res = null;
 		try {
@@ -2024,7 +2024,7 @@ public class JedisUtil {
 	 * @param key
 	 * @return
 	 */
-	public String srandmember(String key) {
+	public static String srandmember(String key) {
 		Jedis jedis = null;
 		String res = null;
 		try {
@@ -2049,7 +2049,7 @@ public class JedisUtil {
 	 * @param key
 	 * @return
 	 */
-	public Set<String> smembers(String key) {
+	public static Set<String> smembers(String key) {
 		Jedis jedis = null;
 		Set<String> res = null;
 		try {
@@ -2079,7 +2079,7 @@ public class JedisUtil {
 	 * @param member
 	 * @return
 	 */
-	public Long zadd(String key, double score, String member) {
+	public static Long  zadd(String key, double score, String member) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -2106,7 +2106,7 @@ public class JedisUtil {
 	 * @param max
 	 * @return 指定区间内的有序集成员的列表。
 	 */
-	public Set<String> zrange(String key, long min, long max) {
+	public static Set<String> zrange(String key, long min, long max) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPoolStatic.getResource();
@@ -2132,7 +2132,7 @@ public class JedisUtil {
 	 * @param max
 	 * @return 值在 min 和 max 之间的成员的数量。异常返回0
 	 */
-	public Long zcount(String key, double min, double max) {
+	public  static Long zcount(String key, double min, double max) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPoolStatic.getResource();
@@ -2164,7 +2164,7 @@ public class JedisUtil {
 	 * @param increment
 	 * @return 执行 HINCRBY 命令之后，哈希表 key 中域 field的值。异常返回0
 	 */
-	public Long hincrBy(String key, String value, long increment) {
+	public static Long hincrBy(String key, String value, long increment) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPoolStatic.getResource();
@@ -2190,7 +2190,7 @@ public class JedisUtil {
 	 *            可以使一个string 也可以是一个string数组
 	 * @return
 	 */
-	public Long zrem(String key, String... members) {
+	public static Long zrem(String key, String... members) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -2217,7 +2217,7 @@ public class JedisUtil {
 	 * @param member
 	 * @return
 	 */
-	public Double zincrby(String key, double score, String member) {
+	public static Double zincrby(String key, double score, String member) {
 		Jedis jedis = null;
 		Double res = null;
 		try {
@@ -2246,7 +2246,7 @@ public class JedisUtil {
 	 * @param member
 	 * @return
 	 */
-	public Long zrank(String key, String member) {
+	public static Long zrank(String key, String member) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -2275,7 +2275,7 @@ public class JedisUtil {
 	 * @param member
 	 * @return
 	 */
-	public Long zrevrank(String key, String member) {
+	public static Long zrevrank(String key, String member) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -2308,7 +2308,7 @@ public class JedisUtil {
 	 * @param end
 	 * @return
 	 */
-	public Set<String> zrevrange(String key, long start, long end) {
+	public static Set<String> zrevrange(String key, long start, long end) {
 		Jedis jedis = null;
 		Set<String> res = null;
 		try {
@@ -2335,7 +2335,7 @@ public class JedisUtil {
 	 * @param min
 	 * @return
 	 */
-	public Set<String> zrangebyscore(String key, String max, String min) {
+	public static  Set<String> zrangebyscore(String key, String max, String min) {
 		Jedis jedis = null;
 		Set<String> res = null;
 		try {
@@ -2362,7 +2362,7 @@ public class JedisUtil {
 	 * @param min
 	 * @return
 	 */
-	public Set<String> zrangeByScore(String key, double max, double min) {
+	public static Set<String> zrangeByScore(String key, double max, double min) {
 		Jedis jedis = null;
 		Set<String> res = null;
 		try {
@@ -2389,7 +2389,7 @@ public class JedisUtil {
 	 * @param max
 	 * @return
 	 */
-	public Long zcount(String key, String min, String max) {
+	public static Long zcount(String key, String min, String max) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -2414,7 +2414,7 @@ public class JedisUtil {
 	 * @param key
 	 * @return
 	 */
-	public Long zcard(String key) {
+	public static Long zcard(String key) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -2440,7 +2440,7 @@ public class JedisUtil {
 	 * @param member
 	 * @return
 	 */
-	public Double zscore(String key, String member) {
+	public static Double zscore(String key, String member) {
 		Jedis jedis = null;
 		Double res = null;
 		try {
@@ -2467,7 +2467,7 @@ public class JedisUtil {
 	 * @param end
 	 * @return
 	 */
-	public Long zremrangeByRank(String key, long start, long end) {
+	public static Long zremrangeByRank(String key, long start, long end) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -2494,7 +2494,7 @@ public class JedisUtil {
 	 * @param end
 	 * @return
 	 */
-	public Long zremrangeByScore(String key, double start, double end) {
+	public static Long zremrangeByScore(String key, double start, double end) {
 		Jedis jedis = null;
 		Long res = null;
 		try {
@@ -2525,7 +2525,7 @@ public class JedisUtil {
 	 * @param pattern
 	 * @return
 	 */
-	public Set<String> keys(String pattern) {
+	public static Set<String> keys(String pattern) {
 		Jedis jedis = null;
 		Set<String> res = null;
 		try {
@@ -2542,7 +2542,7 @@ public class JedisUtil {
 		return res;
 	}
  
-	public Set<String> keysBySelect(String pattern,int database) {
+	public static Set<String> keysBySelect(String pattern,int database) {
 		Jedis jedis = null;
 		Set<String> res = null;
 		try {
@@ -2569,7 +2569,7 @@ public class JedisUtil {
 	 * @param key
 	 * @return
 	 */
-	public String type(String key) {
+	public static String type(String key) {
 		Jedis jedis = null;
 		String res = null;
 		try {
