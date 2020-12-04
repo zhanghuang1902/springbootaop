@@ -125,8 +125,8 @@ public class WebSocket {
             logger.info("来自客户端消息：" + message+"客户端的id是："+session.getId());
 
             System.out.println("------------  :"+message);
-
-            JSONObject jsonObject = JSON.parseObject(message);
+            Object parse = JSONObject.parse(message);
+            JSONObject jsonObject = JSONObject.parseObject(message);
             String textMessage = jsonObject.getString("message");
             String fromuserId = jsonObject.getString("userId");
             String touserId = jsonObject.getString("to");
@@ -157,12 +157,9 @@ public class WebSocket {
 
     public void sendMessageTo(String message, String TouserId) throws IOException {
         for (WebSocket item : clients.values()) {
-
-
             //    System.out.println("在线人员名单  ："+item.userId.toString());
             if (item.userId.equals(TouserId) ) {
                 item.session.getAsyncRemote().sendText(message);
-
                 break;
             }
         }
