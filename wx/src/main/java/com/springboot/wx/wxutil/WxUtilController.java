@@ -6,9 +6,10 @@ import com.springboot.wx.bean.SceneStr;
 import com.springboot.wx.validator.InterimQrCodeValidator;
 import com.springboot.wx.wxurl.WxUrl;
 import com.srpingboot.jedis.util.JedisUtil;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -16,7 +17,9 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * ClassName:AccessTokenController
@@ -89,5 +92,29 @@ public class WxUtilController {
         outputStream.close();
     }
 
+    /**
+     * 推送时间验证解密
+     * 端口号必须是80 地址为微信公众号设置的路由
+     */
+    @GetMapping("/patient/authentication/authenticationMessage")
+    public String getWxPushAndDecrypt(String signature,String timestamp,String nonce,String echostr) {
+        try {
+            List<String> list = Arrays.asList("123456", timestamp, nonce);
+            list.sort(String::compareTo);
+            StringBuilder sb = new StringBuilder();
+            list.forEach(sb::append);
+            String s = DigestUtils.sha1Hex(sb.toString());
+            System.out.println(signature);
+            System.out.println(s);
+            if (signature.equals(s)) {
+                return echostr;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
 }
