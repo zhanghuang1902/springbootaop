@@ -18,5 +18,5 @@ spring:
         min-idle: 0
     # 连接超时时间（毫秒）
     timeout: 1000
-appid: wxb28a83d359e0a961
-appsecret: cc9ad0be76890683c632ad91e6c18981
+appid: wxadce6ecc0e67a146
+appsecret: 5d116cb1dd3ed37210611c4782094564

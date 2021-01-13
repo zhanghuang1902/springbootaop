@@ -1,23 +1,29 @@
 package com.springboot.wx.wxutil;
 
+
+import com.alibaba.fastjson.JSONObject;
 import com.springboot.wx.bean.AccessTokenBean;
 import com.springboot.wx.bean.QrCodeBean;
 import com.springboot.wx.bean.SceneStr;
+import com.springboot.wx.bean.WxUserInfo;
 import com.springboot.wx.validator.InterimQrCodeValidator;
 import com.springboot.wx.wxurl.WxUrl;
 import com.srpingboot.jedis.util.JedisUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,6 +47,9 @@ public class WxUtilController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private RestTemplate restTemplateOne;
+
     /**
      * 获取微信公众号token
      *
@@ -50,11 +59,10 @@ public class WxUtilController {
     public String accessToken() {
         String url = WxUrl.url;
         String replace = url.replace("APPID", appid).replace("APPSECRET", appsecret);
-        AccessTokenBean s = restTemplate.getForEntity(replace, AccessTokenBean.class).getBody();
-        String access_token = s.getAccess_token();
-        System.out.println(access_token);
-        JedisUtil.set("access_token", access_token, 7600, 8);
-        return access_token;
+        String s = restTemplate.getForEntity(replace, String.class).getBody();
+        System.out.println(s);
+//        JedisUtil.set("access_token", access_token, 7600, 8);
+        return s;
     }
 
     /**
@@ -116,5 +124,27 @@ public class WxUtilController {
         }
         return "";
     }
+
+    /**
+     * 获取微信用户信息
+     *
+     */
+    @GetMapping("/userMessage")
+    public String userMessage() {
+        try {
+            String accessToken="40_XMQptsiH7y4c5GEpDNipyog16WgPgZHkK2QpojOSHkl414OMtyT-HdBhhdzYTDyuoQS2xUJoyAZpG16wqKRtbijGZTwv7TR_O3F9RCm-7BfFIzRZIujdelLrUbXB5CMseEBL84GoE2hWK2ZsSSPeAJAJJG";
+            String openId="oFWZ7v1N4Sb3M3rHmYeWiXBPRRT4";
+            String url="https://api.weixin.qq.com/cgi-bin/user/info?access_token="+accessToken+"&openid="+openId+"&lang=zh_CN";
+            String response = restTemplateOne.getForObject(url, String.class,accessToken,openId);
+            return response;
+        }catch (HttpClientErrorException e){
+            e.printStackTrace();
+            throw e;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
 
 }
